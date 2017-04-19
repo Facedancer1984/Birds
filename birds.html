@@ -4,97 +4,88 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="css/bootstrap.css">
-    <script type="text/javascript">
-        (function ()
-        {
-            //TASK 1
-/*            var a = sum(2,2)
-            console.log(a)
-
-            function sum(x,y) {
-                return x+y
-            }*/
-
-/*            var a = sum(2,2)
-            console.log(a)
-
-            var sum = function(x,y) {
-                return x+y
-            }*/
-
-            //TASK 2
-/*            function f(p) {
-                if (p>0)	return p;
-            }
-
-            x = f(5);
-            alert(x);
-            x = f(-5);
-            alert(x);*/
-
-            //TASK 3
-
-/*            function func(param) {
-                alert("First declaration");
-            }
-            function func() {
-                alert("Second declaration");
-            }
-            func(2);*/
-
-            //TASK 4
-/*
-            function f() {
-                p = 5;
-            }
-
-            f();
-            alert(p);
-*/
-
-/*            function f() {
-
-              var p = 5;
-            }
-
-            f();
-            alert(p);*/
-
-/*            //TASK 5
-            var run = function(distance, speed) {
-                for(var i = 0; i < arguments.length; i++){
-                    alert(arguments[i])
-                }
-
-                        speed = speed || 10;
-                var time = distance / speed;
-                return time;
-            }
-
-            //run();
-                run(10,5);*/
-
-             //TASK 6
-            
-            function  f() {
-                var summ = 0;
-                for(var i = 0; i < arguments.length; i++){
-                    summ+=arguments[i]
-                }
-                return summ /(arguments.length)
-            }
-
-            var res = f(1,2,3);
-            console.log(res);
-
-            var m = [1,2,3];
-            var r = f.apply(this,m);
-            console.log(r);
-
-        })();
-    </script>
+    <script src="birds.js"></script>
 </head>
 <body>
+        <div class="container">
+            <div class="row">
+                <table class="table" id="summary">
+                    <tr>
+                        <th>#</th>
+                        <th>Type</th>
+                        <th>Count</th>
+                        <th>Price</th>
+                    </tr>
+                </table>
+            </div>
+            <div class="row">
+                <div class="col-xs-6">
+                    <h3>Purchase</h3>
+                    <label>Type</label>
+                    <select id="birdTypeSelect"></select><Br>
+                    <label>Count</label>
+                    <input type="text" size="40" id="PurchaseCountInput"><Br>
+                    <label>Total$:</label>
+                    <input type="text" size="40" id="PurchaseTotalCost"><Br>
+                    <button size="40" id="PurchaseBtn" onclick="sell()">Purchase</button><Br>
+                </div>
+                <div class="col-xs-6">
+                    <h3>AddToStore</h3>
+                    <label>Type</label>
+                    <input type="text" size="40" id="AddTypeInput"></input><Br>
+                    <label>Count</label>
+                    <input type="text" size="40" id="AddCountInput"><Br>
+                    <label>Total$:</label>
+                    <input type="text" size="40" id="AddTotalCost"><Br>
+                    <button size="40" id="AddBtn">Add</button><Br>
+                </div>
+            </div>
+        </div>
 
+<script>
+    function fillTable(){
+        var store = shopStore;
+        var table = document.getElementById("summary");
+        //table.clear();
+        var counter = 0;
+        for (p in store){
+            counter++;
+            var bird = store[p];
+            var row = table.insertRow();
+            var c1 = row.insertCell(0);
+            c1.innerHTML = counter;
+            var c2 = row.insertCell(1);
+            c2.innerHTML = bird.type;
+            var c3 = row.insertCell(2);
+            c3.innerHTML = bird.count;
+            var c4 = row.insertCell(3);
+            c4.innerHTML = bird.price;
+        }
+    }
+
+    function fillDropDown() {
+        var store = shopStore;
+        var select = document.getElementById("birdTypeSelect");
+        //select.clear;
+        for (var i = 0; i < store.length; i++) {
+            var opt = document.createElement('option');
+            opt.innerHTML = store[i].type;
+            opt.value = store[i].type;
+            select.appendChild(opt);
+        }
+    }
+
+    function sell(){
+        var inputField = document.getElementById("PurchaseCountInput");
+        var dropDownBirdType = document.getElementById("birdTypeSelect");
+
+        sellBirds(dropDownBirdType.value,inputField.value);
+        fillTable();
+    }
+
+    fillTable();
+    fillDropDown();
+
+</script>
 </body>
 </html>
